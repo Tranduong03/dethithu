@@ -1,0 +1,103 @@
+﻿@model dethithu.Models.Sanpham
+@{
+    ViewBag.Title = "ThemSanPham";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Create A New Product</h2>
+
+@using (Html.BeginForm("ThemSanPham", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.TenSanpham, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(sp => sp.TenSanpham, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.TenSanpham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.MoTa, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(sp => sp.MoTa, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(sp => sp.MoTa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.Gia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(sp => sp.Gia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(sp => sp.Gia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.TrangThai, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(sp => sp.TrangThai, new SelectList(
+                 new List<SelectListItem>
+                 {
+                        new SelectListItem { Value = "1", Text = "Available" },
+                         new SelectListItem { Value = "0", Text = "Not available" }
+                 }, "Value", "Text"),
+                 "Select Status",
+                 new { @class = "form-control" })
+                @Html.ValidationMessageFor(sp => sp.TrangThai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.AnhDaiDien, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="ImageFile" class="from-control" required />
+                @Html.ValidationMessageFor(sp => sp.AnhDaiDien, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.NoiBat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="radio">
+                    <label>
+                        @Html.RadioButtonFor(sp => sp.NoiBat, 1) Yes &nbsp; @Html.RadioButtonFor(sp => sp.NoiBat, 0) No
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(sp => sp.NoiBat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(sp => sp.PhanLoaiSanPhamID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownListFor(sp => sp.PhanLoaiSanPhamID, (SelectList)ViewBag.PhamLoaiSanPhamList, "Select Category", new { @class = "form-control" })*@
+                @Html.DropDownListFor(sp => sp.PhanLoaiSanPhamID, (SelectList)ViewBag.PhanLoaiSanPhamList, "Select Category", new { @class = "form-control" })
+                @Html.ValidationMessageFor(sp => sp.PhanLoaiSanPhamID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ThemSanPham" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở về", "Index")
+</div>
+<hr />
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+

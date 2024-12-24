@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<section id="billboard" class="overflow-hidden">
+
+    <button class="button-prev">
+        <i class="icon icon-chevron-left"></i>
+    </button>
+    <button class="button-next">
+        <i class="icon icon-chevron-right"></i>
+    </button>
+    <div class="swiper main-swiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image: url(Content/images/banner1.jpg); background-repeat: no-repeat; background-size: cover; background-position: center;">
+                <div class="banner-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 class="banner-title">Summer Collection</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac.</p>
+                                <div class="btn-wrap">
+                                    <a href="shop.html" class="btn btn-light btn-medium d-flex align-items-center" tabindex="0">
+                                        Shop it now <i class="icon icon-arrow-io"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swiper-slide" style="background-image: url(Content/images/banner2.jpg); background-repeat: no-repeat; background-size: cover; background-position: center;">
+                <div class="banner-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 class="banner-title">Casual Collection</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac.</p>
+                                <div class="btn-wrap">
+                                    <a href="shop.html" class="btn btn-light btn-light-arrow btn-medium d-flex align-items-center" tabindex="0">
+                                        Shop it now <i class="icon icon-arrow-io"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="subscribe" class="padding-large">
+    <div class="container">
+        <div class="row">
+            <div class="block-text col-md-6">
+                <div class="section-header">
+                    <h2 class="section-title">Get 25% off Discount Coupons</h2>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dictumst amet, metus, sit massa posuere maecenas. At tellus ut nunc amet vel egestas.</p>
+            </div>
+            <div class="subscribe-content col-md-6">
+                <form id="form" class="d-flex justify-content-between">
+                    <input type="text" name="email" placeholder="Enter your email addresss here">
+                    <button class="btn btn-dark">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="selling-products" class="product-store bg-light-grey padding-large">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Best selling products</h2>
+            <h3 style="border: 3px solid red; padding: 5px; display: inline-block;"> Trần Nguyễn Phi Dương </h3>
+            <p>
+                <a href="@Url.Action("ThemSanPham", "Home")" class="btn btn-primary"> Add a new Product </a>
+            </p>
+        </div>
+        @*<ul class="tabs list-unstyled">
+            <li data-tab-target="#all" class="active tab">All</li>
+            <li data-tab-target="#shoes" class="tab">Shoes</li>
+            <li data-tab-target="#tshirts" class="tab">Tshirts</li>
+            <li data-tab-target="#pants" class="tab">Pants</li>
+            <li data-tab-target="#hoodie" class="tab">Hoodie</li>
+            <li data-tab-target="#outer" class="tab">Outer</li>
+            <li data-tab-target="#jackets" class="tab">Jackets</li>
+            <li data-tab-target="#accessories" class="tab">Accessories</li>
+        </ul>*@
+
+        @Html.Action("Phanloai", "Home")
+
+        @*@Html.Action("SanPhamTheoPhanLoai", "Home", new {id = 2})*@
+        <div id="product-container">
+            @Html.Partial("SanPhamTheoPhanLoai", ViewData["AllProducts"])
+        </div>
+
+
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $(".tabs .tab").on("click", function () {
+            // Xóa class active khỏi tất cả các tab
+            $(".tabs .tab").removeClass("active");
+
+            // Thêm class active cho tab hiện tại
+            $(this).addClass("active");
+
+            var categoryId = $(this).data("tab-target").replace("#", ""); // Lấy ID phân loại
+            $.ajax({
+                url: "/Home/SanPhamTheoPhanLoai",
+                type: "GET",
+                data: { id: categoryId },
+                success: function (result) {
+                    $("#product-container").html(result); // Hiển thị sản phẩm tại container
+                },
+                error: function () {
+                    alert("Có lỗi xảy ra. Vui lòng thử lại!");
+                }
+            });
+        });
+    });
+
+</script>
